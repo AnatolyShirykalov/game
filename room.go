@@ -21,7 +21,7 @@ func (r *Room) Links()[]Link {
 
 func (r *Room) LinkedWith(rto *Room)bool {
         for _, link := range r.Links() {
-                if link.Rfrom == r && link.Rto == rto {
+                if link.Rfrom.Name == r.Name && link.Rto.Name == rto.Name {
                         return true
                 }
         }
