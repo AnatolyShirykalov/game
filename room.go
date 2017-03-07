@@ -25,10 +25,17 @@ func (r *Room) Links() []Link {
 }
 
 func (r *Room) LinkedWith(rto *Room) bool {
-	for _, link := range r.Links() {
-		if link.Rfrom.Name == r.Name && link.Rto.Name == rto.Name {
-			return true
-		}
-	}
-	return false
+        return r.linkTo(rto, true)
+}
+func (r *Room) UnlockedLinkTo(rto *Room) bool {
+        return r.linkTo(rto, false)
+}
+
+func (r *Room) linkTo(rto *Room, permitLock bool) bool {
+        for _, link := range r.Links() {
+                if link.Rfrom.Name == r.Name && link.Rto.Name == rto.Name && (permitLock || !link.Lock) {
+                        return true
+                }
+        }
+        return false
 }
